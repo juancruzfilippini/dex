@@ -9,27 +9,20 @@ return [
     | Default Database Connection Name
     |--------------------------------------------------------------------------
     |
-    | Here you may specify which of the database connections below you wish
-    | to use as your default connection for all database work. Of course
-    | you may use many connections at once using the Database library.
+    | Aquí especificás qué conexión querés que Laravel use por defecto.
+    | En tu caso, va a ser Oracle.
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'oracle'),
 
     /*
     |--------------------------------------------------------------------------
     | Database Connections
     |--------------------------------------------------------------------------
     |
-    | Here are each of the database connections setup for your application.
-    | Of course, examples of configuring each database platform that is
-    | supported by Laravel is shown below to make development simple.
-    |
-    |
-    | All database work in Laravel is done through the PHP PDO facilities
-    | so make sure you have the driver for your particular database of
-    | choice installed on your machine before you begin development.
+    | Configuración de todas las conexiones disponibles en tu app.
+    | Oracle agregado con yajra/oci8.
     |
     */
 
@@ -42,24 +35,20 @@ return [
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
+
         'oracle' => [
-            'driver'         => 'oracle',
-            'host'           => env('ORACLE_HOST', '127.0.0.1'),
-            'port'           => env('ORACLE_PORT', '1521'),
-            'database'       => env('ORACLE_SERVICE_NAME', ''), // SERVICE_NAME
-            'service_name'   => env('ORACLE_SERVICE_NAME', ''), // importante
-            'username'       => env('ORACLE_USERNAME', ''),
-            'password'       => env('ORACLE_PASSWORD', ''),
-            'charset'        => 'AL32UTF8',
-            'prefix'         => '',
-            'prefix_schema'  => '',
-            'edition'        => env('DB_EDITION', 'ora$base'),
-            'server_version' => env('DB_SERVER_VERSION', '19c'),
-            'load_balance'   => 'yes',
-            'dynamic'        => [],
+            'driver'        => 'oracle',
+            'tns'           => env('DB_TNS', ''),
+            'host'          => env('ORACLE_HOST', '127.0.0.1'),
+            'port'          => env('ORACLE_PORT', '1521'),
+            'database'      => env('ORACLE_SERVICE_NAME', ''), // Service Name
+            'service_name'  => env('ORACLE_SERVICE_NAME', ''), // opcional
+            'username'      => env('ORACLE_USERNAME', ''),
+            'password'      => env('ORACLE_PASSWORD', ''),
+            'charset'       => env('DB_CHARSET', 'AL32UTF8'),
+            'prefix'        => '',
+            'prefix_schema' => '',
         ],
-
-
 
         'mysql' => [
             'driver' => 'mysql',
@@ -107,8 +96,6 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
-            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
     ],
@@ -118,9 +105,7 @@ return [
     | Migration Repository Table
     |--------------------------------------------------------------------------
     |
-    | This table keeps track of all the migrations that have already run for
-    | your application. Using this information, we can determine which of
-    | the migrations on disk haven't actually been run in the database.
+    | Esta tabla mantiene el registro de las migraciones ejecutadas.
     |
     */
 
@@ -131,9 +116,7 @@ return [
     | Redis Databases
     |--------------------------------------------------------------------------
     |
-    | Redis is an open source, fast, and advanced key-value store that also
-    | provides a richer body of commands than a typical key-value system
-    | such as APC or Memcached. Laravel makes it easy to dig right in.
+    | Configuración de Redis, no lo tocamos.
     |
     */
 
