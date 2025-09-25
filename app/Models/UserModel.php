@@ -2,10 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Yajra\Oci8\Eloquent\OracleEloquent as Model;
 
 class UserModel extends Model
 {
-    use HasFactory;
+    protected $connection = 'oracle';
+    protected $table = 'CO_GED.DATOS_USUARIO';
+    protected $primaryKey = 'USUARIO';
+    public $incrementing = false;
+    public $timestamps = false;
+
+    // Opcional: podés abrir todo con guarded vacío
+    protected $guarded = [];
 }

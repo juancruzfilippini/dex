@@ -42,6 +42,24 @@ return [
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
+        'oracle' => [
+            'driver'         => 'oracle',
+            'host'           => env('ORACLE_HOST', '127.0.0.1'),
+            'port'           => env('ORACLE_PORT', '1521'),
+            'database'       => env('ORACLE_SERVICE_NAME', ''), // SERVICE_NAME
+            'service_name'   => env('ORACLE_SERVICE_NAME', ''), // importante
+            'username'       => env('ORACLE_USERNAME', ''),
+            'password'       => env('ORACLE_PASSWORD', ''),
+            'charset'        => 'AL32UTF8',
+            'prefix'         => '',
+            'prefix_schema'  => '',
+            'edition'        => env('DB_EDITION', 'ora$base'),
+            'server_version' => env('DB_SERVER_VERSION', '19c'),
+            'load_balance'   => 'yes',
+            'dynamic'        => [],
+        ],
+
+
 
         'mysql' => [
             'driver' => 'mysql',

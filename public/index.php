@@ -20,6 +20,15 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
     require $maintenance;
 }
 
+// public/index.php (al principio)
+putenv('TNS_ADMIN=C:\\oracle\\instantclient_23_8\\network\\admin');
+
+// Opción A: forzar NLS_LANG correcto
+putenv('NLS_LANG=AMERICAN_AMERICA.AL32UTF8');
+
+// Opción B (alternativa): limpiar NLS_LANG si tenés uno malo heredado
+// putenv('NLS_LANG=');
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
