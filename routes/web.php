@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ExpedienteController; // 👈 agregado
+use App\Http\Controllers\ExpedienteController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dex-laravel/public/login'); // <<— en vez de return view('welcome')
@@ -24,6 +24,11 @@ Route::middleware('auth')->group(function () {
 
     // Expedientes 🚀
     Route::get('/expedientes', [ExpedienteController::class, 'index'])->name('expedientes.index');
+
+    // GEDOS 🚀
+    Route::get('/gedos', function () {
+        return view('gedos.index');
+    })->name('gedos.index');
 });
 
 require __DIR__ . '/auth.php';

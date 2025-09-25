@@ -26,6 +26,11 @@
                     <x-nav-link :href="route('expedientes.index')" :active="request()->routeIs('expedientes.*')">
                         {{ __('Expedientes') }}
                     </x-nav-link>
+
+                    <!-- GEDOS 🚀 -->
+                    <x-nav-link :href="route('gedos.index')" :active="request()->routeIs('gedos.*')">
+                        {{ __('GEDOS') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -91,6 +96,11 @@
             <!-- Expedientes -->
             <x-responsive-nav-link :href="route('expedientes.index')" :active="request()->routeIs('expedientes.*')">
                 {{ __('Expedientes') }}
+            </x-responsive-nav-link>
+
+            <!-- GEDOS 🚀 -->
+            <x-responsive-nav-link :href="route('gedos.index')" :active="request()->routeIs('gedos.*')">
+                {{ __('GEDOS') }}
             </x-responsive-nav-link>
         </div>
 
