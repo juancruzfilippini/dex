@@ -1,14 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExpedienteController;
 use App\Http\Controllers\ConsultaExpedientesController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use App\Http\Controllers\GedoController;
+use App\Http\Controllers\ConsultaGedoController;
 
-Route::redirect('/', '/dex-laravel/public/login'); // <<— en vez de return view('welcome')
+Route::redirect('/', '/dex-laravel/public/login');
 
 // Dashboard
 Route::get('/dashboard', function () {
@@ -27,45 +27,22 @@ Route::middleware('auth')->group(function () {
 
     // Expedientes
     Route::get('/expedientes', [ExpedienteController::class, 'index'])->name('expedientes.index');
-
-    // Expedientes: consultas específicas
     Route::post('/expedientes/numero-anio', [ConsultaExpedientesController::class, 'porNumeroAnio'])->name('expedientes.numero');
     Route::post('/expedientes/reparticion', [ConsultaExpedientesController::class, 'porReparticion'])->name('expedientes.reparticion');
     Route::post('/expedientes/documentos', [ConsultaExpedientesController::class, 'conDocumentos'])->name('expedientes.documentos');
     Route::post('/expedientes/bloqueados', [ConsultaExpedientesController::class, 'bloqueados'])->name('expedientes.bloqueados');
     Route::post('/expedientes/solicitante', [ConsultaExpedientesController::class, 'porSolicitante'])->name('expedientes.solicitante');
+    // Expedientes - Ver detalle
+    Route::get('/expedientes/detalle/{id}/{anio}', [ConsultaExpedientesController::class, 'detalle'])
+    ->name('expedientes.detalle');
+
 
     // GEDOS
-    Route::get('/gedos', function () {
-        return view('gedos.index');
-    })->name('gedos.index');
-
-// Test Oracle: documentos asociados a un expediente
-    Route::get('/test-oracle-documentos', function (Illuminate\Http\Request $request) {
-    try {
-        $id = $request->input('id'); // ej: ?id=394
-
-        if (!$id) {
-            return "⚠️ Debes enviar un ID de expediente, ej: /test-oracle-documentos?id=394";
-        }
-
-        $expedientes = DB::connection('oracle')->select("
-            SELECT e.NUMERO, e.ANIO, d.ID_DOCUMENTO, d.FECHA_CARGA
-            FROM EE_GED.EE_EXPEDIENTE_DOCUMENTOS d
-            JOIN EE_GED.EE_EXPEDIENTE_ELECTRONICO e 
-                ON d.ID_EE_DOC = e.ID
-            WHERE e.ID = :id
-              AND ROWNUM <= 10
-        ", ['id' => $id]);
-
-        return ['expedientes' => $expedientes];
-
-    } catch (\Exception $e) {
-        return $e->getMessage();
-    }
-});
-
-
+    Route::get('/gedos', [GedoController::class, 'index'])->name('gedos.index'); // <- ESTA es la que faltaba antes
+    Route::post('/gedos/numero-anio', [ConsultaGedoController::class, 'porNumeroAnio'])->name('gedos.numero');
+    Route::post('/gedos/reparticion', [ConsultaGedoController::class, 'porReparticion'])->name('gedos.reparticion');
+    Route::post('/gedos/bloqueados', [ConsultaGedoController::class, 'bloqueados'])->name('gedos.bloqueados');
+    Route::post('/gedos/estado', [ConsultaGedoController::class, 'porEstado'])->name('gedos.estado');
 });
 
 require __DIR__.'/auth.php';

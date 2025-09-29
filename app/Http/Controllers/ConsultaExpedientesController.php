@@ -14,7 +14,7 @@ class ConsultaExpedientesController extends Controller
     {
         $numero = $request->input('numero');
         $anio   = $request->input('anio');
-        $perPage = 10; // cantidad de filas por página
+        $perPage = 10;
 
         $sql = "
             SELECT NUMERO, ANIO, CODIGO_REPARTICION_USUARIO
@@ -137,5 +137,29 @@ class ConsultaExpedientesController extends Controller
             'resultados' => $resultados,
             'perPage'    => $perPage
         ]);
+    }
+
+    /**
+     * Mostrar detalle de un expediente específico
+     */
+    public function detalle($id, $anio)
+    {
+        $sql = "
+            SELECT *
+            FROM EE_GED.EE_EXPEDIENTE_ELECTRONICO
+            WHERE NUMERO = :id
+              AND ANIO = :anio
+        ";
+
+        $detalle = DB::connection('oracle')->select($sql, [
+            'id'   => $id,
+            'anio' => $anio,
+        ]);
+
+        $detalle = array_map(function ($item) {
+            return array_change_key_case((array) $item, CASE_LOWER);
+        }, $detalle);
+
+        return view('expedientes.detalle', compact('detalle'));
     }
 }
