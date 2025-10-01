@@ -7,6 +7,7 @@ use App\Http\Controllers\ExpedienteController;
 use App\Http\Controllers\ConsultaExpedientesController;
 use App\Http\Controllers\GedoController;
 use App\Http\Controllers\ConsultaGedoController;
+use App\Http\Controllers\ExpedientesDestinatarioController;
 
 Route::redirect('/', '/dex-laravel/public/login');
 
@@ -43,6 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/gedos/reparticion', [ConsultaGedoController::class, 'porReparticion'])->name('gedos.reparticion');
     Route::post('/gedos/bloqueados', [ConsultaGedoController::class, 'bloqueados'])->name('gedos.bloqueados');
     Route::post('/gedos/estado', [ConsultaGedoController::class, 'porEstado'])->name('gedos.estado');
+
+    Route::get('/expedientes/destinatario', [ExpedientesDestinatarioController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('expedientes.destinatario.index');
 });
 
 require __DIR__.'/auth.php';
